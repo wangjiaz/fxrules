@@ -14,10 +14,59 @@
 
       <div>
         <h3>买入规则</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <td>交易规则</td>
+              <td>使用次数</td>
+              <td>成功次数</td>
+              <td>胜率</td>
+              <td>新交易</td>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for rule in buy_rules %}
+            <tr>
+              <td>{{ rule.name }}</td>
+              <td>{{ rule.count }}</td>
+              <td>{{ rule.wincount }}</td>
+              <td>{{ rule.win_ratio }}%</td>
+              <td><a href="/newtrade/{{ rule.id }}">新交易</a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+
+        </table>
       </div>
 
       <div>
         <h3>卖出规则</h3>
+        <table>
+          <thead>
+            <tr>
+              <td>交易规则</td>
+              <td>使用次数</td>
+              <td>成功次数</td>
+              <td>胜率</td>
+              <td>新交易</td>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for rule in sell_rules %}
+            <tr>
+              <td>{{ rule.name }}</td>
+              <td>{{ rule.count }}</td>
+              <td>{{ rule.wincount }}</td>
+              <td>{{ rule.win_ratio }}%</td>
+              <td><a href="/newtrade/{{ rule.id }}">新交易</a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+
+        </table>
       </div>
 
       <div>

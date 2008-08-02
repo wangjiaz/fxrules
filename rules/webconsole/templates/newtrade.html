@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html 
+ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="/static/prototype.js"></script>
+    <title>fxrules - Create a new trade</title>
+  </head>
+
+  <body>
+    <div id="container">
+
+      <h3>{{ rule.name }}</h3>
+      <form id="tradeform" action="." method="POST">
+        <div>
+          <ul id="checklist">
+          {% for check in checkpoints %}
+            <li>
+              <input type="checkbox" id="chk-{{check.id}}" />
+              <label for="chk-{{check.id}}">{{check.description}}</label>
+            </li>
+          {% endfor %}
+          </ul>
+        </div>
+
+        <div>
+          <label for="currency">选择交易币种</label>
+          <select id="currency" name="currency">
+            {% for c in currencies %}
+            <option>{{c.name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <p>
+          <input type="button" value="Create" onclick="validate()"/>
+        </p>
+      </form>
+
+    </div><!-- container -->
+  </body>
+
+  <script type="text/javascript">
+  function validate() {
+    var checklist = $('checklist');
+    var checks = checklist.getElementsByTagName('input');
+    var all_passed = 1;
+
+    for (var i = 0; i < checks.length; i++) {
+      var elem = checks[i];
+      if (elem.type == 'checkbox' && ! elem.checked) {
+        all_passed = 0;
+        break;
+      }
+    }
+
+    if (all_passed) {
+      var form = $('tradeform');
+      form.submit();
+    } else {
+      alert ('你没有通过所有检查项，不能进行交易');
+    }
+  }
+  </script>
+</html>
