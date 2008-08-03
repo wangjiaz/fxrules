@@ -1,0 +1,72 @@
+/** main.css **/
+
+body {
+  font-size: 13px;
+  background: #fff;
+  width: 800px;
+  text-align: center;
+  margin: 0px auto;
+}
+
+div, h1, h2, h3, h4, h5, h6 {
+  position: relative;
+  margin: 0px;
+  padding: 0px;
+  border: none;
+}
+
+a {
+  color: #5588ff;
+  font-size: 12px;
+}
+
+h3 {
+  padding: 3px 5px;
+  font-size: 12px;
+  background: #aaddff;
+  margin: 12px 0px;
+}
+
+#container {
+  text-align: left;
+}
+
+#header {
+  height: 40px;
+  border-bottom: solid 1px #aaf;
+}
+
+#header #logo {
+  position: absolute;
+  top: 5px;
+}
+
+#header #logo a {
+  font-size: 12px;
+  color: #000;
+}
+
+#header #minibar {
+  position: absolute;
+  right: 0px;
+  bottom: 5px;
+}
+
+#header #minibar p {
+  display: inline;
+  margin-left: 5px;
+  color: #aaa;
+}
+
+div.rulelist {
+  margin: 10px 20px 0px 20px;
+}
+
+
+div.rulelist table {
+  width: 100%;
+}
+
+ul#checklist li {
+  list-style: none;
+}

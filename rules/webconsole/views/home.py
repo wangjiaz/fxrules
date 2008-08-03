@@ -27,10 +27,14 @@ def home(request):
   n_buy_rules = len(buy_rules)
   n_sell_rules = len(sell_rules)
 
+  trades = Trade.objects.filter(isover = False).order_by('-id')
+
   values = { 'buy_rules': buy_rules,
       'sell_rules': sell_rules,
       'n_buy_rules': n_buy_rules,
       'n_sell_rules': n_sell_rules, 
+      'trades': trades,
+      'user': request.user,
   }
 
   return render_to_response ('home.html', values)
@@ -71,6 +75,39 @@ def newtrade (request, ruleid):
   values = {'rule': rule,
       'currencies': currencies,
       'checkpoints': checkpoints,
+      'user': request.user,
   }
 
   return render_to_response ('newtrade.html', values)
+
+
+def closetrade (request, tradeid):
+  """ close a trade and record result """
+
+  trade = Trade.objects.get(id = tradeid)
+
+  if request.method == 'POST':
+    pts = request.POST.get ('pts', 0)
+    iswin = request.POST.get ('win', True)
+    iswin = int(iswin)
+
+    trade.isover = True
+    trade.win = bool(iswin)
+    trade.pts = int(pts)
+    trade.save()
+
+    # update wincount
+    if trade.win:
+      trade.rule.wincount += 1
+      trade.rule.save()
+      trade.currency.wincount += 1
+      trade.currency.save()
+
+    return HttpResponse('')
+
+  else:
+    values = {'trade': trade,
+      'user': request.user,
+    }
+
+    return render_to_response ('closetrade.html', values)

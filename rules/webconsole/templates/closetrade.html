@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html 
+ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="/static/main.css" />
+    <script type="text/javascript" src="/static/prototype.js"></script>
+    <title>fxrules - Close a trade</title>
+  </head>
+
+  <body>
+    <div id="container">
+
+      <div id="header">
+        {% include "header.html" %}
+      </div>
+
+      <h3>关闭交易</h3>
+      <p>方向：{{ trade.rule.type }}</p>
+      <p>规则：{{ trade.rule.name }}</p>
+      <p>币种：{{ trade.currency.name }}</p>
+      <p>交易开始时间：{{ trade.createtime }}</p>
+
+      <form id="closeform">
+        <table>
+          <tr>
+            <td>交易结果</td>
+            <td>
+              <input type="radio" name="trade-result" id="trade-win" checked="checked" />
+              <label for="trade-win">盈利</label>
+
+              <input type="radio" id="trade-lose" name="trade-result" />
+              <label for="trade-lose">亏损</label>
+            </td>
+          </tr>
+
+          <tr>
+            <td>点数</td>
+            <td><input type="text" id="pts" name="pts" /></td>
+          </tr>
+        </table>
+
+        <p>
+          <input type="button" value="保存结果" onclick="sendform()" />
+          <span><a href="/home">或者，返回首页</a></span>
+        </p>
+      </form>
+    </div><!-- container -->
+  </body>
+
+  <script>
+    function sendform() {
+      var values = $('closeform').serialize(true);
+
+      if (! values.pts) {
+        alert ('请输入点数');
+        return;
+      }
+
+      if ($('trade-win').checked) {
+        values['win'] = 1;
+      } else {
+        values['win'] = 0;
+      }
+
+      var qstr = $H(values).toQueryString();
+      new Ajax.Request ('/closetrade/{{trade.id}}/',
+        { method: 'POST',
+          parameters: qstr, 
+          onComplete: sendform_return }
+       ); 
+    }
+
+    function sendform_return (resp) {
+      window.location = '/home/'
+    }
+  </script>
+</html>

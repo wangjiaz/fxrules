@@ -11,6 +11,7 @@ urlpatterns = patterns('',
   (r'^login/$', login.login),
   (r'^home/$', home.home),
   (r'^newtrade/(\d+)/$', home.newtrade),
+  (r'^closetrade/(\d+)/$', home.closetrade),
 )
 
 if settings.DEBUG:

@@ -6,12 +6,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="/static/main.css" />
     <script type="text/javascript" src="/static/prototype.js"></script>
     <title>fxrules - Create a new trade</title>
   </head>
 
   <body>
     <div id="container">
+
+      <div id="header">
+        {% include "header.html" %}
+      </div>
 
       <h3>{{ rule.name }}</h3>
       <form id="tradeform" action="." method="POST">
@@ -36,7 +41,8 @@
         </div>
 
         <p>
-          <input type="button" value="Create" onclick="validate()"/>
+          <input type="button" value="保存交易" onclick="validate()"/>
+          <span><a href="/home">或者，放弃操作</a></span>
         </p>
       </form>
 

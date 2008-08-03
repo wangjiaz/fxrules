@@ -49,6 +49,7 @@ class Checkpoint (models.Model):
 class Trade (models.Model):
   """ a buy/sell transaction """
   createtime = models.DateTimeField (auto_now_add = True)
+  closetime = models.DateTimeField (auto_now = True)
   win = models.BooleanField(default = False)
   pts = models.IntegerField(default = 0)
   isover = models.BooleanField(default = False)
