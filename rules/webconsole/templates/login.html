@@ -1,28 +1,35 @@
-<html>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html 
+ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="/static/main.css" />
     <title>Login</title>
   </head>
 
   <body>
-    <div id="page" class="login">
+    <div id="container">
 
-      <h2>Login to rules management system</h2>
+      <h3>Login to rules management system</h3>
 
       <div class="errmsg">{{ message }}</div>
 
       <form action="/login/" method="post">
         <table>
           <tr>
-            <td>Username</td>
+            <td>用户名</td>
             <td><input type="text" name="username" /></td>
           </tr>
           <tr>
-            <td>Password</td>
+            <td>密码</td>
             <td><input type="password" name="password" /></td>
           </tr>
         </table>
 
-        <input type="submit" value="submit" name="submit" />
+        <input type="submit" value="进入系统" name="submit" />
       </form>
 
     </div>

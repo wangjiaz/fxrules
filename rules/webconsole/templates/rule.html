@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html 
+ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="/static/main.css" />
+    <script type="text/javascript" src="/static/prototype.js"></script>
+    <title>fxrules - Create a new trade</title>
+  </head>
+
+  <body>
+    <div id="container">
+
+      <div id="header">
+        {% include "header.html" %}
+      </div>
+
+      <h3>{{ rule.name }}</h3>
+
+      <div id="rulestats">
+        <table>
+          <tbody>
+            <tr>
+              <td>创建于:</td>
+              <td>{{rule.createtime}}</td>
+            </tr>
+            <tr>
+              <td>测试次数:</td>
+              <td>{{rule.count}}</td>
+            </tr>
+            <tr>
+              <td>盈利次数:</td>
+              <td>{{rule.wincount}}</td>
+            </tr>
+            <tr>
+              <td>胜率:</td>
+              <td>{{rule.win_ratio}}%</td>
+            </tr>
+          </tbody>
+
+          <tbody>
+            {% for c in currencies %}
+            <tr>
+              <td>{{ c.name }}</td>
+              <td>{{ c.win_ratio }}%&nbsp;({{c.wincount}}/{{c.count}})</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="rulelist">
+        <h3>交易列表&nbsp;({{ n_trades }}笔交易)</h3>
+        <table>
+          <thead>
+            <th>ID</th>
+            <th>币种</th>
+            <th>是否结清</th>
+            <th>是否盈利</th>
+            <th>点数</th>
+            <th>建立日期</th>
+          </thead>
+
+          <tbody>
+            {% for t in trades %}
+            <tr>
+              <td>{{ t.id }}</td>
+              <td>{{ t.currency.name }}</td>
+              <td>{{ t.isover}}</td>
+              <td>{{ t.win }}</td>
+              <td>{{ t.pts }}</td>
+              <td>{{ t.createtime }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <p><a href="/home">回首页&nbsp;&raquo;</a></p>
+
+    </div><!-- container -->
+  </body>
+</html>
