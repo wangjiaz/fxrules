@@ -10,8 +10,10 @@ urlpatterns = patterns('',
 
   (r'^login/$', login.login),
   (r'^home/$', home.home),
+  (r'^$', home.home),
   (r'^newtrade/(\d+)/$', home.newtrade),
   (r'^closetrade/(\d+)/$', home.closetrade),
+  (r'^rule/(\d+)/$', home.rulestat),
 )
 
 if settings.DEBUG:
