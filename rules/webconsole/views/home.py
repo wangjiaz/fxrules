@@ -146,6 +146,7 @@ def rulestat (request, ruleid):
   rule = Rule.objects.get(id=ruleid)
   trades = rule.trade_set.all().order_by('-id')
   n_trades = len(trades)
+  checkpoints = rule.checkpoint_set.all()
 
   # compute win_ratio for this rule
   if rule.count == 0:
@@ -177,11 +178,16 @@ def rulestat (request, ruleid):
     currencies.append(c)
     c.wincount, c.count, c.win_ratio = currency_stat[k]
 
+  # change \n to <br/> for trade memo
+  for t in trades:
+    t.memo = t.memo.replace('\n', '<br/>')
+
   values = {'rule': rule,
       'trades': trades,
       'n_trades': n_trades,
       'currencies': currencies,
       'user': request.user,
+      'checkpoints': checkpoints,
   }
 
   return render_to_response('rule.html', values)

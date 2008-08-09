@@ -8,10 +8,67 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="/static/main.css" />
     <script type="text/javascript" src="/static/prototype.js"></script>
+    <script type="text/javascript" src="/static/scriptaculous.js"></script>
+    <script type="text/javascript" src="/static/livepipe.js"></script>
+    <script type="text/javascript" src="/static/livepipe.js"></script>
+    <script type="text/javascript" src="/static/window.js"></script>
     <title>fxrules - Create a new trade</title>
+
+<style>
+		
+	#control_overlay {
+		background-color:#000;
+	}
+	
+	.tooltip {
+		border:1px solid #000;
+		background-color:#fff;
+		font-family:"Lucida Grande",Verdana;
+		font-size:12px;
+		color:#333;
+    text-align: left;
+	}
+
+	.window .window_header {
+		text-align:center;
+	}
+
+	.window .window_title {
+		margin-top:-7px;
+		margin-bottom:7px;
+		font-size:11px;
+		cursor:move;
+	}
+
+	.window .window_close {
+		display:block;
+		position:absolute;
+		top:4px;
+		left:5px;
+		height:13px;
+		width:13px;
+		cursor:pointer;
+    cursor:hand;
+	}
+	</style>
+
+    <script>
+      document.observe('dom:loaded', function() {
+        {% for t in trades %}
+        new Control.Window($(document.body).down('[href=#trade{{t.id}}]'), {
+          position: 'relative',
+          hover: true,
+          offsetLeft: 75,
+          width: 175,
+          className: 'tooltip'
+        });
+        {% endfor %}
+      });
+    </script>
   </head>
 
   <body>
+
     <div id="container">
 
       <div id="header">
@@ -25,7 +82,7 @@
           <tbody>
             <tr>
               <td>创建于:</td>
-              <td>{{rule.createtime}}</td>
+              <td>{{rule.createtime|date:"D, d M Y" }}</td>
             </tr>
             <tr>
               <td>测试次数:</td>
@@ -49,6 +106,19 @@
             </tr>
             {% endfor %}
           </tbody>
+
+          <tbody>
+            <tr>
+              <td>规则:</td>
+              <td>
+                <ol>
+                  {% for c in checkpoints %}
+                  <li>{{ c.description }}</li>
+                  {% endfor %}
+                </ol>
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
 
@@ -67,7 +137,7 @@
           <tbody>
             {% for t in trades %}
             <tr>
-              <td>{{ t.id }}</td>
+              <td><a href="#trade{{t.id}}">{{ t.id }}</a></td>
               <td>{{ t.currency.name }}</td>
               <td>{{ t.isover}}</td>
               <td>{{ t.win }}</td>
@@ -82,5 +152,9 @@
       <p><a href="/home">回首页&nbsp;&raquo;</a></p>
 
     </div><!-- container -->
+
+    {% for t in trades %}
+    <div id="trade{{t.id}}">{{ t.memo }}</div>
+    {% endfor %}
   </body>
 </html>
