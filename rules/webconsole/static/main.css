@@ -23,7 +23,7 @@ a {
 h3 {
   padding: 3px 5px;
   font-size: 12px;
-  background: #aaddff;
+  background: #bbddff;
   margin: 12px 0px;
 }
 
@@ -58,15 +58,23 @@ h3 {
   color: #aaa;
 }
 
-div.rulelist {
-  margin: 10px 20px 0px 20px;
-}
-
-
 div.rulelist table {
   width: 100%;
 }
 
 ul#checklist li {
   list-style: none;
+}
+
+div.newtrade div.field {
+  margin-top: 12px;
+}
+
+div.closetrade td {
+  vertical-align: top;
+}
+
+div.newtrade textarea, div.closetrade textarea {
+  height: 150px;
+  width: 450px;
 }

@@ -12,7 +12,7 @@
   </head>
 
   <body>
-    <div id="container">
+    <div id="container" class="newtrade">
 
       <div id="header">
         {% include "header.html" %}
@@ -31,13 +31,19 @@
           </ul>
         </div>
 
-        <div>
+        <div class="field">
           <label for="currency">选择交易币种</label>
           <select id="currency" name="currency">
             {% for c in currencies %}
             <option>{{c.name}}</option>
             {% endfor %}
           </select>
+        </div>
+
+        <div class="field">
+          <label for="memo">简单说明交易理由</label>
+          <p>
+          <textarea id="memo" name="memo"></textarea>
         </div>
 
         <p>

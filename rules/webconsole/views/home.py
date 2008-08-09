@@ -74,10 +74,13 @@ def newtrade (request, ruleid):
     currency_name = request.POST.get('currency', '')
     c = Currency.objects.get(name=currency_name)
 
+    memo = request.POST.get('memo', '')
+
     # create new trade
     trade = Trade()
     trade.rule = rule
     trade.currency = c
+    trade.memo = memo
     trade.save()
 
     # up count
@@ -115,10 +118,12 @@ def closetrade (request, tradeid):
     pts = request.POST.get ('pts', 0)
     iswin = request.POST.get ('win', True)
     iswin = int(iswin)
+    memo = request.POST['memo']
 
     trade.isover = True
     trade.win = bool(iswin)
     trade.pts = int(pts)
+    trade.memo = memo
     trade.save()
 
     # update wincount
