@@ -1,0 +1,54 @@
+#!/bin/bash
+
+PATH=/usr/local/bin:/usr/bin:/usr/sbin:/bin:/sbin
+FXRULES=/home/charles/fxrules/rules
+FXRULESPID=/tmp/fxrules.pid
+FXRULESPORT=8001
+FXRULESHOST=127.0.0.1
+
+DJANGOSRC=$FXRULES/manage.py
+NAME=fxrules
+
+function start {
+  python $DJANGOSRC runfcgi method=threaded daemonize=true pidfile=$FXRULESPID host=$FXRULESHOST port=$FXRULESPORT
+  echo "$NAME starting"
+}
+
+function stop {
+  pid=`cat $FXRULESPID`
+  kill -KILL $pid
+  rm $FXRULESPID
+  echo "$NAME stopped"
+}
+
+case "$1" in
+  start)
+    if [ -e $FXRULESPID ]
+    then
+      echo "fxrules already running"
+    else
+      start
+    fi ;;
+
+  stop )
+    if [ -e $FXRULESPID ]
+    then
+      stop
+    else
+      echo "fxrules is not running ..."
+    fi ;;
+
+  restart )
+    stop
+    start ;;
+
+  reload )
+    stop
+    start ;;
+  force-reload )
+    stop
+    start ;;
+
+  * )
+    echo "$NAME: I don't know how to proceed" ;;
+esac
