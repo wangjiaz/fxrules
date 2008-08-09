@@ -53,9 +53,18 @@ class Trade (models.Model):
   win = models.BooleanField(default = False)
   pts = models.IntegerField(default = 0)
   isover = models.BooleanField(default = False)
+  memo = models.TextField(default='')
 
   rule = models.ForeignKey(Rule)
   currency = models.ForeignKey(Currency)
 
   class Admin:
     pass
+
+
+class Level (models.Model):
+  """ record my current market value and the level I'm on """
+  value = models.FloatField(max_digits=15, decimal_places=2)
+  level = models.IntegerField(default=1)
+  target = models.FloatField(max_digits=15, decimal_places=2)
+  lastupdated = models.DateTimeField(auto_now = 1)

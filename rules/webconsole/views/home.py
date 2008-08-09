@@ -44,6 +44,13 @@ def home(request):
     if c.count == 0: c.win_ratio = 0.0
     else: c.win_ratio = c.wincount * 100.0 / c.count
 
+  # get level
+  levels = Level.objects.order_by('-id')
+  level_now = None
+  if len(levels) > 0:
+    level_now = levels[0]
+    level_now.growth = level_now.target / level_now.value
+
   values = { 'buy_rules': buy_rules,
       'sell_rules': sell_rules,
       'n_buy_rules': n_buy_rules,
@@ -52,6 +59,7 @@ def home(request):
       'user': request.user,
       'stat': st,
       'currencies': currencies,
+      'level_now': level_now,
   }
 
   return render_to_response ('home.html', values)
@@ -172,3 +180,26 @@ def rulestat (request, ruleid):
   }
 
   return render_to_response('rule.html', values)
+
+
+def savevalue (request): 
+  """ save a new value and compute its level """
+  v = request.POST['newvalue']
+  level = Level()
+  level.value = float(v)
+
+  # compute current level and target value, with base=500$ and growth rate = 1.1
+  n = 1
+  base = 500
+  rate = 1.1
+  target = base * rate
+  while level.value > target:
+    n += 1
+    target = (target + base) * rate
+
+  level.level = n
+  level.target = target
+
+  Level.save(level)
+
+  return HttpResponseRedirect('/home')

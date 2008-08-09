@@ -17,6 +17,40 @@
         {% include "header.html" %}
       </div>
 
+      <div id="level">
+        {% if level_now %}
+        <h3>我的级别: <span>{{ level_now.level }}</h3>
+        <table>
+          <tbody>
+            <tr>
+              <td>我的当前市值:</td>
+              <td>{{ level_now.value }}</td>
+            </tr>
+            <tr>
+              <td>目标位:</td>
+              <td>{{ level_now.target }}</td>
+            </tr>
+            <tr>
+              <td>所需增长:</td>
+              <td>{{ level_now.growth }}</td>
+            </tr>
+            <tr>
+              <td>上次市值修改日期:</td>
+              <td>{{ level_now.lastupdated }}</td>
+            </tr>
+          </tbody>
+        </table>
+        {% endif %}
+
+        <p>
+          <form method="POST" action="/savevalue/">
+            <label for="newvalue">我的最新市值</label>
+            <input type="text" id="newvalue" name="newvalue"/>
+            <input type="submit" name="submitvalue" value="保存"/>
+          </form>
+        </p>
+      </div>
+
       <div id="stat">
         <h3>统计数据</h3>
         <table>
