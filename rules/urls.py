@@ -15,6 +15,11 @@ urlpatterns = patterns('',
   (r'^closetrade/(\d+)/$', home.closetrade),
   (r'^rule/(\d+)/$', home.rulestat),
   (r'^savevalue/$', home.savevalue),
+  (r'^savedelta/(\d+)/$', home.savedelta),
+  (r'^validateaccount/(\d+)/$', home.validateaccount),
+  (r'^executeappend/(\d+)/$', home.executeappend),
+  (r'^takebonus/(\d+)/$', home.takebonus),
+  (r'^skipbonus/(\d+)/$', home.skipbonus),
 )
 
 if settings.DEBUG:

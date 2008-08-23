@@ -7,6 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="/static/main.css" />
+    <script type="text/javascript" src="/static/prototype.js"></script>
     <title>fxrules - Home</title>
   </head>
 
@@ -17,38 +18,117 @@
         {% include "header.html" %}
       </div>
 
-      <div id="level">
-        {% if level_now %}
-        <h3>我的级别: <span>{{ level_now.level }}</h3>
-        <table>
-          <tbody>
-            <tr>
-              <td>我的当前市值:</td>
-              <td>{{ level_now.value }}</td>
-            </tr>
-            <tr>
-              <td>目标位:</td>
-              <td>{{ level_now.target }}</td>
-            </tr>
-            <tr>
-              <td>所需增长:</td>
-              <td>{{ level_now.growth }}</td>
-            </tr>
-            <tr>
-              <td>上次市值修改日期:</td>
-              <td>{{ level_now.lastupdated }}</td>
-            </tr>
-          </tbody>
-        </table>
-        {% endif %}
+      <div id="accounts">
+        <h3>Balance: {{ balance }}, unit={{unit}}</h3>
 
-        <p>
-          <form method="POST" action="/savevalue/">
-            <label for="newvalue">我的最新市值</label>
-            <input type="text" id="newvalue" name="newvalue"/>
-            <input type="submit" name="submitvalue" value="保存"/>
-          </form>
-        </p>
+        {% for a in accounts %}
+
+        <div class="account">
+          <h4>{{ a.name }}: {{ a.balance }}; unit: {{ a.unit }}</h4>
+          <p>{{ a.strategy }}</p>
+          <p><a href="/validateaccount/{{a.id}}">validate</a></p>
+          <table>
+            <tbody>
+              <tr>
+                <td>level:</td>
+                <td>{{ a.level }}</td>
+              </tr>
+
+              <tr>
+                <td>next bonus level:</td>
+                <td>{{ a.bonus_level }}</td>
+              </tr>
+
+              <tr>
+                <td>bonus:</td>
+                <td>{{ a.bonus }}</td>
+              </tr>
+
+              <tr>
+                <td>unit ratio:</td>
+                <td>{{ a.unit_ratio }}</td>
+              </tr>
+
+
+              <tr>
+                <td>upgrade:</td>
+                <td>{{ a.upgrade }},&nbsp;{{ a.up_ratio }}</td>
+              </tr>
+
+              <tr>
+                <td>downgrade:</td>
+                <td>{{ a.downgrade }},&nbsp;{{ a.down_ratio }}</td>
+              </tr>
+
+              <tr>
+                <td>last updated:</td>
+                <td>{{ a.lastupdated }}</td>
+              </tr>
+
+              <tr>
+                <td></td>
+                
+                <td>
+                  <form action="/savedelta/{{a.id}}/" method="POST">
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td>资金变化量</td>
+                          <td><input type="text" name="delta" /></td>
+                        </tr>
+
+                        <tr>
+                          <td><label>变化原因</label></td>
+                          <td><input type="text" name="memo" /></td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <input type="submit" value="保存资金变化量" />
+                  </form>
+                </td>
+
+              </tr>
+
+              <tr>
+                <td>Bonus notices</td>
+                <td>
+                  <ol>
+                  {% for b in a.bonus_notices %}
+                  <li>
+                  <p>I can take <strong>{{ b.amount }}</strong> as bonus, {{b.lastupdated}}</p>
+                  <a href="/skipbonus/{{b.id}}/">close</a>
+                  </li>
+                  {% endfor %}
+                  </ol>
+                </td>
+              </tr>
+
+              {% if a.append_capital %}
+              <tr>
+                <td>Append capital</td>
+                <td>
+                  <ol>
+                  {% for x in a.append_notices %}
+                  <li>
+                  <p>
+                  Please append {{ a.base }} to reach level {{ a.level|add:"1" }}, {{ x.lastupdated }}
+                  </p>
+                  <a href="/executeappend/{{x.id}}/">close</a>
+                  </li>
+                  {% endfor %}
+                </ol>
+                </td>
+              </tr>
+              {% endif %}
+
+            </tbody>
+          </table>
+
+        </div>
+
+        {% endfor %}
+
       </div>
 
       <div id="stat">

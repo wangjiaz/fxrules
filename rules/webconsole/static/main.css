@@ -13,6 +13,7 @@ div, h1, h2, h3, h4, h5, h6 {
   margin: 0px;
   padding: 0px;
   border: none;
+  clear: both;
 }
 
 a {
@@ -78,4 +79,20 @@ div.closetrade td {
 div.newtrade textarea, div.closetrade textarea {
   height: 150px;
   width: 450px;
+}
+
+div.account {
+  float: left;
+  clear: none;
+  margin: 10px;
+  width: 45%;
+}
+
+div.account h4 {
+  font-size: 12pt;
+}
+
+div.account table td {
+  vertical-align: top;
+  border-bottom: dashed #ccc 1px;
 }

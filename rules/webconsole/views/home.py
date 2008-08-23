@@ -44,12 +44,20 @@ def home(request):
     if c.count == 0: c.win_ratio = 0.0
     else: c.win_ratio = c.wincount * 100.0 / c.count
 
-  # get level
-  levels = Level.objects.order_by('-id')
-  level_now = None
-  if len(levels) > 0:
-    level_now = levels[0]
-    level_now.growth = level_now.target / level_now.value
+  # get accounts data
+  accounts = Account.objects.all().order_by('id')
+  balance = 0.0
+  unit = 0
+  for x in accounts:
+    balance += x.balance
+    unit += x.unit
+    x.up_ratio = x.upgrade / x.balance
+    x.down_ratio = x.downgrade / x.balance
+
+    x.bonus_notices = x.bonusnotice_set.filter(executed = False).order_by('-id')
+
+    if x.append_capital:
+      x.append_notices = x.appendcapitalnotice_set.filter(executed = False).order_by('-id')
 
   values = { 'buy_rules': buy_rules,
       'sell_rules': sell_rules,
@@ -59,7 +67,9 @@ def home(request):
       'user': request.user,
       'stat': st,
       'currencies': currencies,
-      'level_now': level_now,
+      'balance': balance,
+      'unit': unit,
+      'accounts': accounts,
   }
 
   return render_to_response ('home.html', values)
@@ -213,4 +223,52 @@ def savevalue (request):
 
   Level.save(level)
 
+  return HttpResponseRedirect('/home')
+
+def savedelta(request, accountid):
+
+  delta, memo = None, None
+
+  try:
+    delta = request.POST.get('delta', 0.0)
+    delta = float(delta)
+    memo = request.POST.get('memo', '')
+  except:
+    delta = 0.0
+
+  # update account
+  account = Account.objects.get(id=accountid)
+  account.balance += delta
+  account.adjust()
+
+  # create a new change log
+  change = AccountChange(delta = delta, memo = memo)
+  change.account = account
+  change.save()
+
+  return HttpResponseRedirect('/home')
+
+def validateaccount(request, accountid):
+  account = Account.objects.get(id=accountid)
+  account.validate()
+  return HttpResponseRedirect('/home')
+
+def executeappend(request, noticeid):
+  notice = AppendCapitalNotice.objects.get(id=noticeid)
+  notice.executed = True
+  notice.save()
+  return HttpResponseRedirect('/home')
+
+def takebonus(request, bonusid):
+  bonus = BonusNotice.objects.get(id=bonusid)
+  bonus.account.balance -= bonus.amount
+  bonus.account.validate()
+  bonus.executed = True
+  bonus.save()
+  return HttpResponseRedirect('/home')
+
+def skipbonus(request, bonusid):
+  bonus = BonusNotice.objects.get(id=bonusid)
+  bonus.executed = True
+  bonus.save()
   return HttpResponseRedirect('/home')

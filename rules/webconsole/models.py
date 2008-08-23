@@ -68,3 +68,128 @@ class Level (models.Model):
   level = models.IntegerField(default=1)
   target = models.FloatField(max_digits=15, decimal_places=2)
   lastupdated = models.DateTimeField(auto_now = 1)
+
+
+class Account (models.Model):
+  """ account is the money management unit of my forex game """
+  name = models.TextField (blank = True)
+  balance = models.FloatField (max_digits = 15, decimal_places = 2)
+  base = models.FloatField (max_digits = 15, decimal_places = 2)
+  growth = models.FloatField (max_digits = 10, decimal_places = 5)
+  strategy = models.TextField (blank = True)
+  append_capital = models.BooleanField(default = False)
+
+  level = models.IntegerField ()
+  upgrade = models.FloatField (max_digits = 15, decimal_places = 2)
+  downgrade = models.FloatField (max_digits = 15, decimal_places = 2)
+
+  unit_ratio = models.FloatField (max_digits = 10, decimal_places = 5)
+  unit = models.FloatField (max_digits = 15, decimal_places = 2)
+
+  bonus_level = models.IntegerField()
+  bonus_ratio = models.FloatField (max_digits = 10, decimal_places = 5)
+  bonus_level_gap = models.IntegerField()
+  bonus = models.FloatField (max_digits = 15, decimal_places = 2)
+   
+  lastupdated = models.DateTimeField(auto_now = 1)
+
+  def __str__ (self):
+    return '%s: %f' % (self.name, self.balance)
+
+  def adjust (self):
+    """ compute new information for this account """
+    self.__level()
+    self.__unit()
+
+    if self.level >= self.bonus_level:
+      notice = BonusNotice(account=self, amount=self.bonus)
+      notice.save()
+
+    self.__bonus()
+    self.save()
+
+    if self.append_capital:
+      # have I reached the growth?
+      if self.upgrade > self.balance >= self.downgrade * self.growth:
+        notice = AppendCapitalNotice(account=self)
+        notice.save()
+      
+
+  def validate(self):
+    """ compute inferred vars from balance and fixed vars """
+
+    self.__level()
+    self.__unit()
+    self.__bonus()
+
+    self.save()
+
+  def __level(self):
+    n = 0
+    a, b = 0.0, 0.0
+    while True:
+      if self.append_capital:
+        a = self.base * (self.growth ** n - 1) / (self.growth - 1)
+        b = a * self.growth + self.base
+      else:
+        a = self.base * self.growth ** (n-1)
+        b = a * self.growth
+      if b > self.balance:
+        break
+      n += 1
+
+    self.level, self.downgrade, self.upgrade = n, a, b
+
+  def __unit(self):
+    unit = self.downgrade * self.unit_ratio
+    self.unit = unit - unit % 10
+
+  def __bonus(self):
+    a, b = 0, self.bonus_level_gap
+    while b <= self.level:
+      a = b
+      b = b + self.bonus_level_gap
+    self.bonus_level = b
+
+    down = 0.0
+    if self.append_capital:
+      down = self.base * (self.growth ** self.bonus_level - 1) / (self.growth - 1)
+    else:
+      down = self.base * self.growth ** (self.bonus_level - 1)
+    self.bonus = down * self.bonus_ratio
+
+  class Admin:
+    pass
+
+
+class AccountChange (models.Model):
+  """ records account change history """
+  account = models.ForeignKey (Account)
+  delta = models.FloatField (max_digits = 15, decimal_places = 2)
+  memo = models.TextField (blank = True)
+  lastupdated = models.DateTimeField(auto_now = 1)
+
+  class Admin:
+    pass
+
+
+class BonusNotice (models.Model):
+  """ a piece of information telling me I have a bonus """
+  account = models.ForeignKey (Account)
+  amount = models.FloatField (max_digits = 15, decimal_places = 2)
+  executed = models.BooleanField (default = False)
+  memo = models.TextField (blank = True)
+  lastupdated = models.DateTimeField(auto_now = 1)
+
+  class Admin:
+    pass
+
+
+class AppendCapitalNotice(models.Model):
+  """ let me know when to append capital to finish upgrade """
+  account = models.ForeignKey (Account)
+  executed = models.BooleanField (default = False)
+  lastupdated = models.DateTimeField(auto_now = 1)
+
+  class Admin:
+    pass
