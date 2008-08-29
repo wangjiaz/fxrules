@@ -55,6 +55,11 @@ class Trade (models.Model):
   isover = models.BooleanField(default = False)
   memo = models.TextField(default='')
 
+  m10 = models.URLField (null=True)
+  h1 = models.URLField (null=True)
+  h3 = models.URLField (null=True)
+  d = models.URLField (null=True)
+
   rule = models.ForeignKey(Rule)
   currency = models.ForeignKey(Currency)
 

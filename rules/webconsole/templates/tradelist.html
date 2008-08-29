@@ -24,7 +24,7 @@
         <ul class="trades">
           {% for t in trades %}
           <li>
-          <h4>{{ t.currency.name }}</h4>
+          <h4><a href="/trade/{{ t.id }}/" target="_blank">{{ t.currency.name }}</a></h4>
           <p>
           <span>win: {{ t.win }}</span>
           <span>closed: {{ t.isover }}</span>

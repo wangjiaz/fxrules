@@ -297,6 +297,45 @@ def tradelist(request, page):
       'trades': trades,
       'pagelist': pagelist,
       'page': page,
+      'user': request.user,
     }
 
   return render_to_response ('tradelist.html', values)
+
+
+def trade(request, tradeid):
+  trade = Trade.objects.get(id=tradeid)
+
+  values = {
+      'trade': trade,
+      'user': request.user,
+      }
+
+  return render_to_response ('trade.html', values)
+
+
+def updatetrade(request, tradeid):
+  trade = Trade.objects.get(id=tradeid)
+  
+  m10 = request.POST.get('m10', None)
+  h1 = request.POST.get('h1', None)
+  h3 = request.POST.get('h3', None)
+  d = request.POST.get('d', None)
+  memo = request.POST.get('memo', '')
+
+  trade.m10 = m10
+  trade.h1 = h1
+  trade.h3 = h3
+  trade.d = d
+  trade.memo = memo
+
+  try:
+    pts = request.POST.get('pts')
+    trade.pts = int(pts)
+  except:
+    pass
+
+  trade.save()
+
+  return HttpResponseRedirect('/trade/%d/' % (trade.id))
+

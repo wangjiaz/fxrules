@@ -110,7 +110,7 @@ div.tradelist ul.trades li {
   border-bottom: solid 1px #cdd;
 }
 
-div.tradelist ul.trades li h4 {
+div.tradelist ul.trades li h4 a {
   font-size: 15pt;
   color: #888;
 }
@@ -142,4 +142,34 @@ div.tradelist ul.pages li {
   margin-right: 8px;
   font-size: 11pt;
   font-weight: bold;
+}
+
+div.trade table {
+  width: 45%;
+  float: left;
+  margin: 10px 5px 10px 0px;
+}
+
+div.trade table textarea {
+  margin: 10px 0px;
+  width: 400px;
+  height: 180px;
+  border: solid 1px #ccf;
+}
+
+div.trade table input.text {
+  width: 280px;
+  border: solid 1px #ccf;
+}
+
+div.trade div.cmd {
+  text-align: center;
+}
+
+div.trade div.cmd a {
+  margin-left: 10px;
+}
+
+div.trade img {
+  margin-top: 10px;
 }

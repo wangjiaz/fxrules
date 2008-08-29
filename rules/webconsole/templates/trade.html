@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html 
+ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="/static/main.css" />
+    <script type="text/javascript" src="/static/prototype.js"></script>
+    <title>fxrules - {{ trade.currency.name }}</title>
+  </head>
+
+  <body>
+    <div id="container" class="trade">
+
+      <div id="header">
+        {% include "header.html" %}
+      </div>
+
+      <div>
+        <form action="/updatetrade/{{trade.id}}/" method="POST">
+        <table class="data">
+          <tbody>
+            <tr>
+              <td>instrument:</td>
+              <td>{{ trade.currency.name }}</td>
+            </tr>
+
+            <tr>
+              <td>type:</td>
+              <td>{{ trade.rule.type }}</td>
+            </tr>
+
+            <tr>
+              <td>rule:</td>
+              <td><a href="/rule/{{trade.rule.id}}/">{{ trade.rule.name }}</a></td>
+            </tr>
+
+            <tr>
+              <td>created:</td>
+              <td>{{ trade.createtime }}</td>
+            </tr>
+
+            <tr>
+              <td>win:</td>
+              <td>{{ trade.win }}</td>
+            </tr>
+
+            <tr>
+              <td>closed:</td>
+              <td>{{ trade.isover }}</td>
+            </tr>
+
+            <tr>
+              <td>pts:</td>
+              <td><input type="text" class="text" name="pts" value="{{trade.pts}}" /></td>
+            </tr>
+
+            <tr>
+              <td>m10:</td>
+              <td>
+                <input class="text" type="text" name="m10" value="{{trade.m10}}" />
+              </td>
+            </tr>
+
+            <tr>
+              <td>h1:</td>
+              <td>
+                <input class="text" type="text" name="h1" value="{{trade.h1}}" />
+              </td>
+            </tr>
+
+            <tr>
+              <td>h3:</td>
+              <td>
+                <input class="text" type="text" name="h3" value="{{trade.h3}}" />
+              </td>
+            </tr>
+
+            <tr>
+              <td>d:</td>
+              <td>
+                <input class="text" type="text" name="d" value="{{trade.d}}" />
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+        <table>
+          <tbody>
+            <tr>
+              <td colspan="2">
+                <p>memo</p>
+                <textarea name="memo">{{ trade.memo }}</textarea>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="cmd">
+          <input type="submit" value="Update" />
+          <a href="#" onclick="window.close();">close window</a>
+        </div>
+
+        </form>
+      </div>
+
+      {% if trade.m10 %}
+      <p>
+      <img src="{{ trade.m10 }}" alt="m10 diagram" />
+      </p>
+      {% endif %}
+
+      {% if trade.h1 %}
+      <p>
+      <img src="{{ trade.h1 }}" alt="h1 diagram" />
+      </p>
+      {% endif %}
+
+      {% if trade.h3 %}
+      <p>
+      <img src="{{ trade.h3 }}" alt="h3 diagram" />
+      </p>
+      {% endif %}
+
+      {% if trade.d %}
+      <p>
+      <img src="{{ trade.d }}" alt="day diagram" />
+      </p>
+      {% endif %}
+
+    </div>
+  </body>
+</html>

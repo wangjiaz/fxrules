@@ -21,6 +21,8 @@ urlpatterns = patterns('',
   (r'^takebonus/(\d+)/$', home.takebonus),
   (r'^skipbonus/(\d+)/$', home.skipbonus),
   (r'^tradelist/(\d+)/$', home.tradelist),
+  (r'^trade/(\d+)/$', home.trade),
+  (r'^updatetrade/(\d+)/$', home.updatetrade),
 )
 
 if settings.DEBUG:
