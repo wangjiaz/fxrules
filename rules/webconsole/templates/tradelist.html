@@ -24,13 +24,23 @@
         <ul class="trades">
           {% for t in trades %}
           <li>
-          <h4>{{ t.currency.name }}<span class="time">{{ t.createtime }}</span></h4>
-          <p>{{ t.memo }}</p>
+          <h4>{{ t.currency.name }}</h4>
           <p>
           <span>win: {{ t.win }}</span>
           <span>closed: {{ t.isover }}</span>
           <span>pts: {{ t.pts }}</span>
           </p>
+          <p>{{ t.memo }}</p>
+
+          <p class="time">{{ t.createtime }}</p>
+          </li>
+          {% endfor %}
+        </ul>
+
+        <ul class="pages">
+          {% for p in pagelist %}
+          <li>
+          <a href="/tradelist/{{p}}/">{{p}}</a>
           </li>
           {% endfor %}
         </ul>

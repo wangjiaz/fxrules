@@ -6,9 +6,10 @@ body {
   width: 800px;
   text-align: center;
   margin: 0px auto;
+  line-height: 1.5;
 }
 
-div, h1, h2, h3, h4, h5, h6 {
+p, div, h1, h2, h3, h4, h5, h6 {
   position: relative;
   margin: 0px;
   padding: 0px;
@@ -98,14 +99,14 @@ div.account table td {
 }
 
 div.tradelist ul.trades {
-  width: 60%;
+  width: 65%;
   padding: 0px;
   margin: 0px;
 }
 
 div.tradelist ul.trades li {
   list-style: none;
-  margin: 10px 0px;
+  margin: 10px 0px 3px 0px;
   border-bottom: solid 1px #cdd;
 }
 
@@ -114,13 +115,31 @@ div.tradelist ul.trades li h4 {
   color: #888;
 }
 
-div.tradelist ul.trades li span.time {
-  font-size: 11pt;
-  margin-left: 30px;
+div.tradelist ul.trades li p {
+  margin: 5px 0px;
+}
+
+div.tradelist ul.trades li p.time {
+  font-size: 10pt;
   font-weight: normal;
+  text-align:right;
+  color: #aaa;
 }
 
 div.tradelist ul.trades li p span {
   margin-right: 20px;
   color: #aaa;
+}
+
+div.tradelist ul.pages {
+  width: 55%;
+  text-align: center;
+}
+
+div.tradelist ul.pages li {
+  list-style: none;
+  display: inline;
+  margin-right: 8px;
+  font-size: 11pt;
+  font-weight: bold;
 }

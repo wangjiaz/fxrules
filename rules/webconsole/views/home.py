@@ -274,9 +274,29 @@ def skipbonus(request, bonusid):
   bonus.save()
   return HttpResponseRedirect('/home')
 
-def tradelist(request):
-  trades = Trade.objects.all().order_by('-createtime')
+def tradelist(request, page):
+  count = Trade.objects.count()
+
+  # compute offset and limit
+  p = int(page)
+  per_page = 10
+  start = (p - 1) * per_page
+  end = start + per_page
+
+  trades = Trade.objects.all().order_by('-createtime')[start:end]
+
+  # compute pages navigation
+  pages = (count-1)  / per_page
+  pages += 1
+  pagelist = range(1, pages + 1)
+
   for t in trades:
     t.memo = t.memo.replace ('\n', '<br/>')
-  values = {'trades': trades}
+
+  values = {
+      'trades': trades,
+      'pagelist': pagelist,
+      'page': page,
+    }
+
   return render_to_response ('tradelist.html', values)
