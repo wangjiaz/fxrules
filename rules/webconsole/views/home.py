@@ -273,3 +273,10 @@ def skipbonus(request, bonusid):
   bonus.executed = True
   bonus.save()
   return HttpResponseRedirect('/home')
+
+def tradelist(request):
+  trades = Trade.objects.all().order_by('-createtime')
+  for t in trades:
+    t.memo = t.memo.replace ('\n', '<br/>')
+  values = {'trades': trades}
+  return render_to_response ('tradelist.html', values)
