@@ -305,12 +305,28 @@ def tradelist(request, page):
   for t in trades:
     t.memo = t.memo.replace ('\n', '<br/>')
 
+  # compute time thread
+  far = Trade.objects.all().order_by('id')[:1][0]
+  near = Trade.objects.all().order_by('-id')[:1][0]
+  tm_far = far.createtime
+  tm_near = near.createtime
+  y, m = tm_near.year, tm_near.month
+  tm_thread = []
+
+  while y > tm_far.year or m >= tm_far.month:
+    tm_thread.append ((y, m))
+    m -= 1
+    if m == 0:
+      m = 12
+      y -= 1
+
   values = {
       'trades': trades,
       'pagelist': pagelist,
       'page': page,
       'user': request.user,
       'result': win,
+      'calendar': tm_thread,
     }
 
   return render_to_response ('tradelist.html', values)

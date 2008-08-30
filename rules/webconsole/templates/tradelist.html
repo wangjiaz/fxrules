@@ -28,6 +28,15 @@
             <span><a href="/tradelist/{{page}}/?result=lose">lose</a></span>
             <span><a href="/tradelist/{{page}}/">all</a></span>
           </div>
+
+          <div class="calendar">
+            <p><strong>view by month</strong></p>
+            <ul>
+              {% for c in calendar %}
+              <li>{{c.0}}/{{c.1}}</li>
+              {% endfor %}
+            </ul>
+          </div>
         </div>
 
         <ul class="trades">

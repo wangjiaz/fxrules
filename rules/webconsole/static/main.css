@@ -107,6 +107,14 @@ div.tradelist div.leftcontrols div.result span {
   margin-left: 10px;
 }
 
+div.tradelist div.calendar {
+  margin-top: 15px;
+}
+
+div.tradelist div.calendar li {
+  list-style: none;
+}
+
 div.tradelist ul.trades {
   width: 65%;
   padding: 0px;
