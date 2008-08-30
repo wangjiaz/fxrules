@@ -21,6 +21,15 @@
       <div>
         <h3>All trades</h3>
 
+        <div class="leftcontrols">
+          <div class="result">
+            <p><strong>view by result</strong></p>
+            <span><a href="/tradelist/{{page}}/?result=win">win</a></span>
+            <span><a href="/tradelist/{{page}}/?result=lose">lose</a></span>
+            <span><a href="/tradelist/{{page}}/">all</a></span>
+          </div>
+        </div>
+
         <ul class="trades">
           {% for t in trades %}
           <li>
@@ -40,7 +49,7 @@
         <ul class="pages">
           {% for p in pagelist %}
           <li>
-          <a href="/tradelist/{{p}}/">{{p}}</a>
+          <a href="/tradelist/{{p}}/?result={{result}}">{{p}}</a>
           </li>
           {% endfor %}
         </ul>

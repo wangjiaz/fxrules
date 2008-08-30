@@ -14,7 +14,7 @@ p, div, h1, h2, h3, h4, h5, h6 {
   margin: 0px;
   padding: 0px;
   border: none;
-  clear: both;
+  clear: none;
 }
 
 a {
@@ -96,6 +96,15 @@ div.account h4 {
 div.account table td {
   vertical-align: top;
   border-bottom: dashed #ccc 1px;
+}
+
+div.tradelist div.leftcontrols {
+  width: 30%;
+  float: right;
+}
+
+div.tradelist div.leftcontrols div.result span {
+  margin-left: 10px;
 }
 
 div.tradelist ul.trades {

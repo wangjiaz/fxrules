@@ -275,7 +275,8 @@ def skipbonus(request, bonusid):
   return HttpResponseRedirect('/home')
 
 def tradelist(request, page):
-  count = Trade.objects.count()
+
+  win = request.GET.get('result', 'all')
 
   # compute offset and limit
   p = int(page)
@@ -283,7 +284,18 @@ def tradelist(request, page):
   start = (p - 1) * per_page
   end = start + per_page
 
-  trades = Trade.objects.all().order_by('-createtime')[start:end]
+  count = 0
+  trades = None
+
+  if win == 'win':
+    count = Trade.objects.filter(win=True).count()
+    trades = Trade.objects.filter(win=True).order_by('-createtime')[start:end]
+  elif win == 'lose':
+    count = Trade.objects.filter(win=False).count()
+    trades = Trade.objects.filter(win=False).order_by('-createtime')[start:end]
+  else:
+    count = Trade.objects.count()
+    trades = Trade.objects.all().order_by('-createtime')[start:end]
 
   # compute pages navigation
   pages = (count-1)  / per_page
@@ -298,6 +310,7 @@ def tradelist(request, page):
       'pagelist': pagelist,
       'page': page,
       'user': request.user,
+      'result': win,
     }
 
   return render_to_response ('tradelist.html', values)
