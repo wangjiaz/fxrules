@@ -21,7 +21,7 @@
       <div>
         <h3>All trades</h3>
 
-        <div class="leftcontrols">
+        <div class="nav">
           <div class="result">
             <p><strong>view by result</strong></p>
             <span><a href="/tradelist/{{page}}/?result=win">win</a></span>
@@ -37,7 +37,7 @@
               {% endfor %}
             </ul>
           </div>
-        </div>
+        </div><!-- end of nav -->
 
         <ul class="trades">
           {% for t in trades %}

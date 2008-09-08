@@ -1,5 +1,12 @@
 /** main.css **/
 
+* {
+  position: relative;
+  margin: 0px;
+  padding: 0px;
+  clear: both;
+}
+
 body {
   font-size: 13px;
   background: #fff;
@@ -7,14 +14,6 @@ body {
   text-align: center;
   margin: 0px auto;
   line-height: 1.5;
-}
-
-p, div, h1, h2, h3, h4, h5, h6 {
-  position: relative;
-  margin: 0px;
-  padding: 0px;
-  border: none;
-  clear: none;
 }
 
 a {
@@ -29,11 +28,18 @@ h3 {
   margin: 12px 0px;
 }
 
+.clear {
+  clear: both;
+}
+
 #container {
   text-align: left;
   margin-bottom: 100px;
 }
 
+/**
+ * header 
+ */
 #header {
   height: 40px;
   border-bottom: solid 1px #aaf;
@@ -60,6 +66,10 @@ h3 {
   margin-left: 5px;
   color: #aaa;
 }
+
+/**
+ * end of header
+ */
 
 div.rulelist table {
   width: 100%;
@@ -98,12 +108,12 @@ div.account table td {
   border-bottom: dashed #ccc 1px;
 }
 
-div.tradelist div.leftcontrols {
+div.tradelist div.nav {
   width: 30%;
   float: right;
 }
 
-div.tradelist div.leftcontrols div.result span {
+div.tradelist div.nav div.result span {
   margin-left: 10px;
 }
 
@@ -113,12 +123,16 @@ div.tradelist div.calendar {
 
 div.tradelist div.calendar li {
   list-style: none;
+  margin-left: 10px;
 }
 
 div.tradelist ul.trades {
-  width: 65%;
-  padding: 0px;
-  margin: 0px;
+  width: 66%;
+  clear: none;
+}
+
+div.tradelist ul.trades * {
+  clear: none;
 }
 
 div.tradelist ul.trades li {
