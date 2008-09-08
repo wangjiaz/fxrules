@@ -147,6 +147,33 @@
               <td>{{ stat.win_ratio }}%</td>
             </tr>
 
+            <tr>
+              <td>最近5次</td>
+              <td>
+                win ratio: {{ stat_5.1 }}<br/>
+                take profit range: {{ stat_5.2 }}<br/>
+                stop lose range: {{ stat_5.3 }}
+              </td>
+            </tr>
+
+            <tr>
+              <td>最近10次</td>
+              <td>
+                win ratio: {{ stat_10.1 }}<br/>
+                take profit range: {{ stat_10.2 }}<br/>
+                stop lose range: {{ stat_10.3 }}
+              </td>
+            </tr>
+
+            <tr>
+              <td>最近20次</td>
+              <td>
+                win ratio: {{ stat_20.1 }}<br/>
+                take profit range: {{ stat_20.2 }}<br/>
+                stop lose range: {{ stat_20.3 }}
+              </td>
+            </tr>
+
             {% for c in currencies %}
             <tr>
               <td>{{c.name}}</td>

@@ -60,6 +60,12 @@ def home(request):
     if x.append_capital:
       x.append_notices = x.appendcapitalnotice_set.filter(executed = False).order_by('-id')
 
+
+  # get trades stats
+  stat_5 = Trade.get_stats(5)
+  stat_10 = Trade.get_stats(10)
+  stat_20 = Trade.get_stats(20)
+
   values = { 'buy_rules': buy_rules,
       'sell_rules': sell_rules,
       'n_buy_rules': n_buy_rules,
@@ -71,6 +77,9 @@ def home(request):
       'balance': balance,
       'unit': unit,
       'accounts': accounts,
+      'stat_5': stat_5,
+      'stat_10': stat_10,
+      'stat_20': stat_20,
   }
 
   return render_to_response ('home.html', values)

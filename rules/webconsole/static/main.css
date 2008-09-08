@@ -28,6 +28,10 @@ h3 {
   margin: 12px 0px;
 }
 
+td {
+  vertical-align: top;
+}
+
 .clear {
   clear: both;
 }
@@ -179,6 +183,7 @@ div.trade table {
   width: 45%;
   float: left;
   margin: 10px 5px 10px 0px;
+  clear: none;
 }
 
 div.trade table textarea {

@@ -63,6 +63,36 @@ class Trade (models.Model):
   rule = models.ForeignKey(Rule)
   currency = models.ForeignKey(Currency)
 
+  def get_stats (count):
+    """ get the stats for the last 'count' closed trades """
+    trades = Trade.objects.filter(isover=True).order_by('-id')[:count]
+
+    min_stop_lose, max_stop_lose = 10000, 0
+    min_take_profit, max_take_profit = 10000, 0
+    win_count = 0
+
+    for t in trades:
+      if t.win:
+        win_count += 1
+        if min_take_profit > t.pts:
+          min_take_profit = t.pts
+        if max_take_profit < t.pts:
+          max_take_profit = t.pts
+
+      else:
+        if min_stop_lose > t.pts:
+          min_stop_lose = t.pts
+        if max_stop_lose < t.pts:
+          max_stop_lose = t.pts
+
+    win_ratio = win_count * 1.0 / count
+    take_profit_range = (min_take_profit, max_take_profit)
+    stop_lose_range = (-max_stop_lose, -min_stop_lose)
+
+    return (count, win_ratio, take_profit_range, stop_lose_range)
+
+  get_stats = staticmethod(get_stats)
+
   class Admin:
     pass
 
