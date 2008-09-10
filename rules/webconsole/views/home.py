@@ -62,9 +62,8 @@ def home(request):
 
 
   # get trades stats
-  stat_5 = Trade.get_stats(5)
-  stat_10 = Trade.get_stats(10)
-  stat_20 = Trade.get_stats(20)
+  stat_8 = Trade.get_stats(8)
+  stat_16 = Trade.get_stats(16)
 
   values = { 'buy_rules': buy_rules,
       'sell_rules': sell_rules,
@@ -77,9 +76,8 @@ def home(request):
       'balance': balance,
       'unit': unit,
       'accounts': accounts,
-      'stat_5': stat_5,
-      'stat_10': stat_10,
-      'stat_20': stat_20,
+      'stat_8': stat_8,
+      'stat_16': stat_16,
   }
 
   return render_to_response ('home.html', values)
