@@ -52,7 +52,8 @@ def home(request):
     balance += x.balance
     unit += x.unit
     if x.balance > 0:
-      x.up_ratio = x.upgrade / x.balance
+      #x.up_ratio = x.upgrade / x.balance
+      x.up_ratio = (x.upgrade - x.balance) / x.unit
       x.down_ratio = x.downgrade / x.balance
 
     x.bonus_notices = x.bonusnotice_set.filter(executed = False).order_by('-id')
