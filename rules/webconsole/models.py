@@ -190,7 +190,7 @@ class Account (models.Model):
     if self.append_capital:
       down = self.base * (self.growth ** self.bonus_level - 1) / (self.growth - 1)
     else:
-      down = self.base * self.growth ** (self.bonus_level - 1)
+      down = self.base * self.growth ** (self.bonus_level - 2)
     self.bonus = down * self.bonus_ratio
 
   class Admin:
